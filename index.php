@@ -2,13 +2,23 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
-use Classes\EmailStorage;
+use Classes\EmailController;
 
-$test = new EmailStorage('тест');
+$message = null;
+$respone = '';
+$emailController = new EmailController(); 
 
-$test->setMessageInfo(date("Y/m/d"), '192.168.0.1');
+if (isset($_POST['message'])) {
+    $message = $_POST['message'];
+} else {
+    $respone = 'Получено пустое сообщение';
+}
+    
+$ip = $_SERVER['REMOTE_ADDR'];
 
+if(empty($response)) {
+    $emailController->createMessage($message, $ip);
+    $respone = $emailController->sendMessage();
+}
 
-
-
-
+echo $respone;

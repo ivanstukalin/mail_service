@@ -24,8 +24,10 @@ class EmailStorage
     ];
 
     /**
-     * @param string $title
-     * @param string $message
+     * Класс для хранения работы с информацией о
+     * электронном письме.
+     * 
+     * @param string $message.
      */
     public function __construct($message) 
     {
@@ -41,7 +43,8 @@ class EmailStorage
     }
 
     /**
-     * Возращает сообщение
+     * Устанавливает дату поступления запроса и ip-
+     * -адресс с которого поступл запрос.
      *
      * @return void
      */
@@ -51,12 +54,10 @@ class EmailStorage
             'date'   => $date,
             'ip'  => $ip,
         ];
-
-        return $this;;
     }
 
     /**
-     * Возращает сообщение
+     * Возращает сообщение.
      *
      * @return string
      */
@@ -66,17 +67,17 @@ class EmailStorage
     }
 
     /**
-     * Возращает дату подачи заявки на отправку
+     * Возращает дату подачи заявки на отправку.
      *
      * @return string
      */
-    public function getData()
+    public function getDate()
     {
-        return $this->messageInfo['data'];
+        return $this->messageInfo['date'];
     }
 
     /**
-     * Возращает ip адрес с которого ушел запрос на отправку
+     * Возращает ip адрес с которого ушел запрос на отправку.
      *
      * @return string
      */
@@ -85,12 +86,16 @@ class EmailStorage
         return $this->messageInfo['ip'];
     }
 
-    public function validateMessage()
+    /**
+     * Убирает из сообщения все лишнее, защищает от подставленного в форму
+     * текста с недобросовестным содержанием (скриптов и прочего). 
+     *
+     * @return void
+     */
+    public function prepareMessage()
     {
         $this->message = trim($this->message);
         $this->message = stripslashes($this->message);
         $this->message = htmlspecialchars($this->message);
-
-        return $this->message;
     }
 }
