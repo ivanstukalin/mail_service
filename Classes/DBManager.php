@@ -6,7 +6,6 @@ use Illuminate\Database\Capsule\Manager;
 use Classes\EmailStorage;
 
 require_once ROOT_DIR . '/bootstrap.php';
-require_once ROOT_DIR . '/config/database.php';
 
 /**
  * Class EmailStorage
@@ -47,8 +46,6 @@ Class DBManager
     public function saveEmail()
     {   
         try {
-            $this->create_connection();
-
             $id = $this->db::table($this->table)->select('id')
                 ->orderBy('desc')
                 ->take(1)
@@ -77,6 +74,8 @@ Class DBManager
      */
     public function findEmail() 
     {
+        $this->create_connection();
+
         $message = $this->db::table($this->table)
             ->select('message')
             ->where('ip', '=',$this->emailStorage->getIp())
@@ -94,6 +93,6 @@ Class DBManager
     private function create_connection()
     {
         $this->db = new Manager();
-        $this->db->addConnection($db_secret); 
+        $this->db->addConnection(DB); 
     }
 }
