@@ -5,13 +5,13 @@ require_once __DIR__ . '/bootstrap.php';
 use Classes\EmailController;
 
 $message = null;
-$respone = '';
+$response = '';
 $emailController = new EmailController(); 
 
 if (isset($_POST['message'])) {
     $message = $_POST['message'];
 } else {
-    $respone = 'Получено пустое сообщение';
+    $response = 'Получено пустое сообщение';
 }
     
 $ip = $_SERVER['REMOTE_ADDR'];
@@ -21,4 +21,4 @@ if(empty($response)) {
     $respone = $emailController->sendMessage();
 }
 
-echo $respone;
+echo $response;

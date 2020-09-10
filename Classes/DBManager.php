@@ -48,8 +48,7 @@ Class DBManager
         try {
             $id = $this->db::table($this->table)->select('id')
                 ->orderBy('desc')
-                ->take(1)
-                ->get();
+                ->first();
 
             $id = isset($id) ? $id++ : 0;
 
